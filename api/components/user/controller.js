@@ -1,5 +1,7 @@
 const nanoid = require('nano-id');
 const TABLE = 'user';
+
+const auth = require('../auth');
 //Controlador como una funcion utilizando injectedStore
 
 module.exports = function (injectedStore){
@@ -18,16 +20,25 @@ module.exports = function (injectedStore){
     function get(id) {
         return store.get(TABLE, id);
     }
-    function upsert(body){
+    async function upsert(body){
 
         const user={
-            name:body.name
+            name:body.name,
+            username:body.username
         }
 
         if (body.id){
             user.id = body.id;
         }else{
             user.id = nanoid();
+        }
+
+        if(body.password || body.username){
+            await auth.upsert({
+                id: user.id,
+                username: user.username,
+                password: user.password,
+            })
         }
 
         return store.upsert(TABLE, user);
