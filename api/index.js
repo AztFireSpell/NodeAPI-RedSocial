@@ -13,10 +13,12 @@ const app = express();
 app.use(bodyParser.json());
 
 const swaggerDoc = require('./openapi.json');
+const auth = require('./components/auth/network.js');
 
 //ROUTES
 //Que ruta esperar, que clase enviar
 app.use('/api/user', user);
+app.use('/api/auth', auth);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 

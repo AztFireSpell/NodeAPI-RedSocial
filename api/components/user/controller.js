@@ -24,7 +24,7 @@ module.exports = function (injectedStore){
 
         const user={
             name:body.name,
-            username:body.username
+            username:body.username,
         }
 
         if (body.id){
@@ -37,7 +37,7 @@ module.exports = function (injectedStore){
             await auth.upsert({
                 id: user.id,
                 username: user.username,
-                password: user.password,
+                password: body.password,
             })
         }
 
