@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const secret = config.jwt.secret;
+const error = require('../utils/error');
 
 function sign(data){
     return jwt.sign(data, secret);
@@ -17,7 +18,7 @@ const check = {
 
         //comprobar si es o no propio el perfil
         if(tokendecode.id !== owner){
-            throw new Error('No puedes editar este elemento');
+            throw error('No puedes editar este elemento', 401);
         }
     },
 }
