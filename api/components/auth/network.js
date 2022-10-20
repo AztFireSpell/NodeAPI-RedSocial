@@ -6,13 +6,11 @@ const Controller = require('./index');
 const router = express.Router();
 
 //Separar las rutas
-router.post('/login', function(req,res){
+router.post('/login', function(req,res,next){
     Controller.login(req.body.username, req.body.password)
     .then(token => {
         response.success(req,res,token,200);
     })
-    .catch(err => {
-        response.error(req,res, 'Informacion Invalida', 400);
-    })
+    .catch(next);
 })
 module.exports = router;

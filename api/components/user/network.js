@@ -31,7 +31,7 @@ function get(req, res, next){
     .catch(next);
 }
 
-function upsert(req, res){
+function upsert(req, res, next){
     Controller.upsert(req.body)
     .then((user)=>{
         response.success(req,res,user,201);

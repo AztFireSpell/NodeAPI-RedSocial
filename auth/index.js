@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-const secret = config.jwt.secret;
 const error = require('../utils/error');
 
+
+const secret = config.jwt.secret;
+
 function sign(data){
-    return jwt.sign(data, secret);
+    return jwt.sign({data}, secret);
 }
 
 function verify(token){
@@ -14,10 +16,9 @@ function verify(token){
 const check = {
     own: function(req, owner){
         const tokendecode= decodeHeader(req);
-        console.log(tokendecode);
 
         //comprobar si es o no propio el perfil
-        if(tokendecode.id !== owner){
+        if(tokendecode.data.id !== owner){
             throw error('No puedes editar este elemento', 401);
         }
     },
