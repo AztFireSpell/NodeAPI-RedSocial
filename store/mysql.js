@@ -87,6 +87,15 @@ async function upsert(table, data) {
 
 }
 
+function follow_user(table, data){
+    return new Promise((resolve, reject) => {
+        connection.query(`INSERT INTO ${table} SET ?`, data, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
+}
+
 
 function query(table, query) {
     return new Promise((resolve, reject) => {
@@ -101,5 +110,6 @@ module.exports = {
     list,
     get,
     upsert,
-    query
+    query,
+    follow_user
 };

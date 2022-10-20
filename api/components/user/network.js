@@ -12,7 +12,7 @@ router.get('/:id', get);
 router.post('/', upsert);
 router.put('/', secure('update'),upsert);
 
-
+router.post('/follow/:id',secure('follow'), follow);
 //implementar la logica de rutas en funciones
 
 function list(req,res,next){
@@ -37,6 +37,20 @@ function upsert(req, res, next){
         response.success(req,res,user,201);
     })
     .catch(next);
+}
+
+function follow(req, res, next){
+    Controller.follow(req.user.data.id, req.params.id)
+    .then(data => {
+        response.success(req,res,data,201);
+    })
+    .catch(err => {
+        if(err.errno==1062){
+            response.error(req,res,'Ya sigues a este usuario',409);
+        }else{
+            next(err);
+        }
+    });
 }
 
 module.exports = router;

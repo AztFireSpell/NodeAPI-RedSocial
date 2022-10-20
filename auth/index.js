@@ -22,6 +22,10 @@ const check = {
             throw error('No puedes editar este elemento', 401);
         }
     },
+    logged: function(req, owner){
+        const tokendecode= decodeHeader(req);
+    },
+
 }
 
 function getToken(auth){
